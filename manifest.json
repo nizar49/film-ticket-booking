@@ -1,0 +1,11 @@
+{
+    "short_name": "PopcornMovies",
+    "name": "Popcorn Movies Application",
+    "description": "An application for managing and viewing movies.",
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#ffffff"
+  }
+  
+  
