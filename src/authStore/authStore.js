@@ -1,18 +1,18 @@
 import { create } from "zustand";
-import { verifyUser, verifyGtoken } from "../utils/verifyAuth";
+import { verifyUser } from "../utils/verifyAuth";
 import Cookies from "js-cookie";
 
 const useAuthStore = create((set) => ({
   isAuth: false,
-  loading: true,
+  loading: false, 
 
   login: async () => {
     set({ loading: true });
     try {
-      await verifyUser();
+      await verifyUser(); 
       set({ isAuth: true, loading: false });
     } catch (error) {
-      console.error("Token verification failed:", error);
+      console.error("Login failed:", error); 
       set({ isAuth: false, loading: false });
     }
   },
@@ -20,21 +20,10 @@ const useAuthStore = create((set) => ({
   signup: async () => {
     set({ loading: true });
     try {
-      await verifyUser();
+      await verifyUser(); 
       set({ isAuth: true, loading: false });
     } catch (error) {
-      console.error("Token verification failed:", error);
-      set({ isAuth: false, loading: false });
-    }
-  },
-
-  googleAuth: async () => {
-    set({ loading: true });
-    try {
-      await verifyGtoken();
-      set({ isAuth: true, loading: false });
-    } catch (error) {
-      console.error("Google token verification failed:", error);
+      console.error("Signup failed:", error); 
       set({ isAuth: false, loading: false });
     }
   },
@@ -55,13 +44,8 @@ const useAuthStore = create((set) => ({
       await verifyUser();
       set({ isAuth: true, loading: false });
     } catch (error) {
-      try {
-        await verifyGtoken();
-        set({ isAuth: true, loading: false });
-      } catch (googleError) {
-        console.error("Token verification failed:", googleError);
-        set({ isAuth: false, loading: false });
-      }
+      console.error("Token verification failed:", error);
+      set({ isAuth: false, loading: false });
     }
   },
 }));

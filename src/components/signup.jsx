@@ -11,7 +11,7 @@ import {baseUrl} from "../basicurl/baseurl"
 import MovieImage from '../images/Movies.png'
 import { Stack } from '@mui/system';
 import AuthStore from "../authStore/authStore"
-import SignupWithGoogle from "./signUpwithGoogle.jsx";
+
 
 
 const styles={
@@ -183,7 +183,7 @@ const {signup}  = AuthStore()
           >
             Sign Up
           </Button>
-          {/* <SignupWithGoogle/> */}
+         
         </Box>
       </Box>
     </Container>

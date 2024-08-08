@@ -11,7 +11,7 @@ import MovieImage from "../images/Movies.png"
 import { Stack } from "@mui/system";
 import { baseUrl } from "../basicurl/baseurl.js";
 import useAuthStore from "../authStore/authStore.js";
-import SignupWithGoogle from "./signUpwithGoogle.jsx";
+
 
 const styles = {
   color: "blue",
