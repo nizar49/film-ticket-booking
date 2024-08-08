@@ -1,1 +1,1 @@
-export const baseUrl='http://localhost:7500'
+export const baseUrl='https://movie-ticket-booking-server.onrender.com'
