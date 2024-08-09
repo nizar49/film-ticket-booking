@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { verifyUser } from "../utils/verifyAuth";
 import { baseUrl } from "../basicurl/baseurl";
-
+import axios from "axios";
 
 const useAuthStore = create((set) => ({
   isAuth: false,
