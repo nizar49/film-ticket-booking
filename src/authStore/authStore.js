@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { verifyUser } from "../utils/verifyAuth";
-import Cookies from "js-cookie";
+import { baseUrl } from "../basicurl/baseurl";
+
 
 const useAuthStore = create((set) => ({
   isAuth: false,
@@ -28,14 +29,15 @@ const useAuthStore = create((set) => ({
     }
   },
 
-  logout: () => {
-    Cookies.remove("userToken");
-    Cookies.remove("googleToken");
-    Cookies.remove("profile");
-    Cookies.remove("profileArray");
-    set({ isAuth: false });
-    const event = new Event("logout");
-    window.dispatchEvent(event);
+  logout: async () => {
+    try {
+      await axios.post(`${baseUrl}/users/logout`, "", { withCredentials: true });
+      set({ isAuth: false });
+      const event = new Event("logout");
+      window.dispatchEvent(event);
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   },
 
   checkAuth: async () => {

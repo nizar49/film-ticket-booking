@@ -48,7 +48,7 @@ export default function login() {
           return; 
         }
         await login()
-        toast.success("Successfully signed up");
+        toast.success("Successfully logged in");
           navigate('/user/dashboard');
           reset();
     } catch (error) {
