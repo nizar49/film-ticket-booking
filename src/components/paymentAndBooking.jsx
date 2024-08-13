@@ -733,7 +733,7 @@ export default function MovieScreen() {
                     justifyContent="center"
                     mt={4}
                   >
-                    {confirm.length === 0 ? (
+                    {confirm.length > 0 ? (
                       <Payments
                         movie={movie.title}
                         theater={selectedTheater.name}
