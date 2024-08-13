@@ -59,7 +59,7 @@ export default function MyBooking() {
         <Stack
           spacing={4}
           width="100%"
-          maxWidth={{ xs: "100%", sm: "450px", md: "500px" }}
+          maxWidth={{ xs: "90%", sm: "450px", md: "500px" }}
           ml={{ xs: 0, sm: 5, md: 40 }}
           mb={15}
         >
