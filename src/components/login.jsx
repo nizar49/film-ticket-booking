@@ -75,7 +75,6 @@ export default function login() {
             maxWidth: { xs: '100%', md: '80%' },
             border: mode === "dark" ? '1px solid #fff' : '1px solid #000',
             borderRadius: '10px',
-            padding: '20px',
             padding: { xs: "10px", md: "20px" },
             boxShadow: mode === "dark" 
             ? 'rgba(255, 255, 255, 0.25) 0px 5px 5px, rgba(255, 255, 255, 0.12) 0px -12px 30px, rgba(255, 255, 255, 0.12) 0px 4px 6px, rgba(255, 255, 255, 0.17) 0px 12px 13px, rgba(255, 255, 255, 0.09) 0px -3px 5px' 
