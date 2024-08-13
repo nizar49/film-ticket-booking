@@ -12,7 +12,7 @@ const styles = (mode) => ({
   color: mode === "dark" ? "#a5a19d" : "#555153",
 });
 
-export default function Mybooking() {
+export default function MyBooking() {
   const [bookings, setBookings] = useState([]);
   const { mode } = useTheme();
 
@@ -35,7 +35,7 @@ export default function Mybooking() {
   }, []);
 
   return (
-    <Box mt={6} ml={10} mb={10}>
+    <Box mt={6} ml={{ xs: 2, md: 10 }} mb={10}>
       {bookings.length <= 0 ? (
         <Stack spacing={4} alignItems="center">
           <Typography
@@ -49,7 +49,7 @@ export default function Mybooking() {
             src={mode === "dark" ? notFoundDark : notFoundLight}
             alt="not found"
             style={{
-              maxWidth: "30%",
+              maxWidth: "80%",
               height: "auto",
               borderRadius: "20px",
             }}
@@ -59,14 +59,14 @@ export default function Mybooking() {
         <Stack
           spacing={4}
           width="100%"
-          maxWidth={{ xs: "250px", md: "500px" }}
-         ml={{xs:5, md:40}}
-         mb={15}
+          maxWidth={{ xs: "100%", sm: "450px", md: "500px" }}
+          ml={{ xs: 0, sm: 5, md: 40 }}
+          mb={15}
         >
           <Typography
             component="h2"
             sx={{
-              fontSize: "2rem",
+              fontSize: { xs: "1.5rem", sm: "2rem" },
               fontWeight: "bold",
               background: "linear-gradient(45deg, #00f260, #0575e6)",
               WebkitBackgroundClip: "text",
@@ -77,7 +77,7 @@ export default function Mybooking() {
               textTransform: "uppercase",
               transition: "transform 0.3s ease",
               textDecoration: "underline",
-              textDecorationColor:mode==="dark"? "#8a8a8a":"#646464",
+              textDecorationColor: mode === "dark" ? "#8a8a8a" : "#646464",
               "&:hover": {
                 transform: "scale(1.05)",
               },
@@ -92,15 +92,17 @@ export default function Mybooking() {
               key={index}
               elevation={3}
               sx={{
-                padding: 2,
-                marginBottom: 2,
+                padding: { xs: 1, sm: 2 },
+                marginBottom: { xs: 1, sm: 2 },
                 backgroundColor: mode === "dark" ? "#080808" : "#fff",
+             
               }}
             >
               <Grid container spacing={2}>
                 <Grid
                   item
                   xs={12}
+                  sm={3}
                   md={2}
                   display="flex"
                   alignItems="center"
@@ -120,6 +122,7 @@ export default function Mybooking() {
                 <Grid
                   item
                   xs={12}
+                  sm={9}
                   md={5}
                   display="flex"
                   flexDirection="column"
@@ -168,8 +171,6 @@ export default function Mybooking() {
                   md={5}
                   display="flex"
                   flexDirection="column"
-                  // justifyContent="flex-end"
-                  // alignItems="flex-end"
                 >
                   <Typography variant="body1" sx={styles(mode)}>
                     Seat Numbers:{" "}
