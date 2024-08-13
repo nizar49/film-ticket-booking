@@ -43,8 +43,8 @@ const useAuthStore = create((set) => ({
   checkAuth: async () => {
     set({ loading: true });
     try {
-      await verifyUser();
-      set({ isAuth: true, loading: false });
+      const result = await verifyUser();
+      set({ isAuth: result.isAuthenticated, loading: false });
     } catch (error) {
       console.error("Token verification failed:", error);
       set({ isAuth: false, loading: false });

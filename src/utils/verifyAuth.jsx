@@ -7,13 +7,13 @@ export const verifyUser = async () => {
     const response = await axios.get(`${baseUrl}/users/verifyUser`, {
       withCredentials: true,
     });
-    if (response.status !== 200) {
-      throw new Error("Failed to verify user");
+    if (response.status === 200 ) {
+      return { isAuthenticated: true };
+    } else {
+      throw new Error("User not authenticated");
     }
-    console.log(response.data);
-    return response.data;
   } catch (error) {
-    console.error(error);
+    console.error("Verification error:", error);
     throw error;
   }
 };
