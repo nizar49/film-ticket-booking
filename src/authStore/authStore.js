@@ -5,7 +5,7 @@ import axios from "axios";
 
 const useAuthStore = create((set) => ({
   isAuth: false,
-  loading: false, 
+  loading: true, 
 
   login: async () => {
     set({ loading: true });
