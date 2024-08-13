@@ -148,8 +148,8 @@ export default function Movies() {
                       >
                         <Card
                           sx={{
-                            width: "260px",
-                            height: "380px",
+                            width: { xs: "100%", sm: "260px" },
+                            height: { xs: "auto", sm: "380px" },
                             backgroundColor:
                               mode === "dark" ? "#070707" : "#f5f3f3",
                             color: mode === "dark" ? "#fff" : "#000",
@@ -180,7 +180,7 @@ export default function Movies() {
                               component="img"
                               sx={{
                                 height: "280px",
-                                width: "280px",
+                                width: "100%",
                                 objectFit: "cover",
                                 transition: "all 0.3s",
                                 borderRadius:'10px'
@@ -195,10 +195,11 @@ export default function Movies() {
                                 gutterBottom
                                 variant="h6"
                                 component="div"
+                                textAlign="center"
                               >
                                 {item.title}
                               </Typography>
-                              <Stack direction={"row"} spacing={5}>
+                              <Stack direction={"row"} spacing={5} justifyContent="center">
                                 <Typography
                                   sx={textStyle}
                                   gutterBottom
@@ -242,8 +243,8 @@ export default function Movies() {
                       >
                         <Card
                           sx={{
-                            width: "260px",
-                            height: "380px",
+                            width: { xs: "100%", sm: "260px" },
+                            height: { xs: "auto", sm: "380px" },
                             backgroundColor:
                               mode === "dark" ? "#070707" : "#f5f3f3",
                             color: mode === "dark" ? "#fff" : "#000",
@@ -274,7 +275,7 @@ export default function Movies() {
                               component="img"
                               sx={{
                                 height: "280px",
-                                width: "280px",
+                                width: "100%",
                                 objectFit: "cover",
                                 transition: "all 0.3s",
                                 borderRadius:'10px'
@@ -289,10 +290,11 @@ export default function Movies() {
                                 gutterBottom
                                 variant="h6"
                                 component="div"
+                                textAlign="center"
                               >
                                 {item.title}
                               </Typography>
-                              <Stack direction={"row"} spacing={5}>
+                              <Stack direction={"row"} spacing={5}  justifyContent="center">
                                 <Typography
                                   sx={textStyle}
                                   gutterBottom
@@ -334,8 +336,8 @@ export default function Movies() {
                       >
                         <Card
                           sx={{
-                            width: "260px",
-                            height: "380px",
+                            width: { xs: "100%", sm: "260px" },
+                            height: { xs: "auto", sm: "380px" },
                             backgroundColor:
                               mode === "dark" ? "#070707" : "#f5f3f3",
                             color: mode === "dark" ? "#fff" : "#000",
@@ -366,7 +368,7 @@ export default function Movies() {
                               component="img"
                               sx={{
                                 height: "280px",
-                                width: "280px",
+                                width: "100%",
                                 objectFit: "cover",
                                 transition: "all 0.3s",
                                 borderRadius:'10px'
@@ -381,10 +383,11 @@ export default function Movies() {
                                 gutterBottom
                                 variant="h6"
                                 component="div"
+                                textAlign="center"
                               >
                                 {item.title}
                               </Typography>
-                              <Stack direction={"row"} spacing={5}>
+                              <Stack direction={"row"} spacing={5} justifyContent="center">
                                 <Typography
                                   sx={textStyle}
                                   gutterBottom
@@ -425,8 +428,8 @@ export default function Movies() {
                       >
                         <Card
                           sx={{
-                            width: "260px",
-                            height: "380px",
+                            width: { xs: "100%", sm: "260px" },
+                            height: { xs: "auto", sm: "380px" },
                             backgroundColor:
                               mode === "dark" ? "#070707" : "#f5f3f3",
                             color: mode === "dark" ? "#fff" : "#000",
@@ -457,7 +460,7 @@ export default function Movies() {
                               component="img"
                               sx={{
                                 height: "280px",
-                                width: "280px",
+                                width: "100%",
                                 objectFit: "cover",
                                 transition: "all 0.3s",
                                 borderRadius:'10px'
@@ -471,10 +474,11 @@ export default function Movies() {
                                 gutterBottom
                                 variant="h6"
                                 component="div"
+                                textAlign="center"
                               >
                                 {item.title}
                               </Typography>
-                              <Stack direction={"row"} spacing={5}>
+                              <Stack direction={"row"} spacing={5} justifyContent="center">
                                 <Typography
                                   sx={textStyle}
                                   gutterBottom
