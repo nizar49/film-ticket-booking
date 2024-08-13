@@ -298,15 +298,15 @@ export default function MovieScreen() {
       ) : (
         <Grid
           container
-          spacing={10}
+          spacing={{xs:0 ,md:10}}
           direction={{ xs: "column", md: "row" }}
           mt={1}
+          mb={1}
           textAlign={"center"}
         >
           <Grid item xs={12} md={8}>
-            <Box mb={3}>
+            <Box>
               <Button
-                   
                 variant="outlined"
                 sx={{
                   textAlign: "center",
@@ -315,12 +315,14 @@ export default function MovieScreen() {
                   letterSpacing: "-0.01em",
                   border:
                     mode === "dark" ? "1px solid #ec7a0e" : "1px solid #a8146b",
-                    borderRadius: 2,
-                    cursor:'not-allowed',
+                  borderRadius: 2,
+                  cursor: "pointer",
                   "&:hover": {
                     color: mode === "dark" ? "#ec7a0e" : "#680840",
                     border:
-                    mode === "dark" ? "1px solid #ec7a0e" : "1px solid #a8146b",
+                      mode === "dark"
+                        ? "1px solid #ec7a0e"
+                        : "1px solid #a8146b",
                   },
                 }}
               >
@@ -334,7 +336,8 @@ export default function MovieScreen() {
               <div
                 style={{
                   height: "200px",
-                  width: "450px",
+                  width: "100%", 
+                  maxWidth: "450px", 
                   backgroundColor: mode === "dark" ? "#dfd1d1" : "#2e2c2c",
                   backdropFilter: "blur(10px)",
                   borderRadius: "20px",
@@ -358,7 +361,7 @@ export default function MovieScreen() {
               spacing={1}
               justifyContent="center"
               mt={5}
-              maxWidth={1000}
+              maxWidth="100%"
             >
               {colors.map((row, rowIndex) => (
                 <Grid
@@ -371,13 +374,15 @@ export default function MovieScreen() {
                 >
                   <Grid item>
                     <Box
-                      width={30}
-                      height={30}
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      fontSize={15}
-                      fontWeight="bold"
+                      sx={{
+                        width: { xs: 20, sm: 30, md: 30 },
+                        height: { xs: 20, sm: 30, md: 30 },
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: { xs: 10, sm: 12, md: 15 },
+                        fontWeight: "bold",
+                      }}
                     >
                       {String.fromCharCode(65 + (5 - rowIndex))}
                     </Box>
@@ -398,24 +403,25 @@ export default function MovieScreen() {
                         }}
                       >
                         <Stack>
-                          <div
-                            style={{
+                          <Box
+                            sx={{
                               backgroundColor: isConfirmed
                                 ? "grey"
                                 : isTemp
                                 ? "yellow"
                                 : color,
                               color: "white",
-                              padding: 5,
-                              borderRadius: 5,
-                              width: 25,
-                              height: 25,
+                              padding: 0.5, 
+                              borderRadius: 1,
+                              width: { xs: 5, sm: 20, md: 25 }, 
+                              height: { xs: 5, sm: 20, md: 25 }, 
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
                               cursor: isConfirmed ? "not-allowed" : "pointer",
                               userSelect: "none",
                               outline: "none",
+                              fontSize: { xs: 10, sm: 12, md: 15 }, 
                             }}
                             onClick={() => handleClick(rowIndex, colIndex)}
                           />
@@ -427,7 +433,7 @@ export default function MovieScreen() {
               ))}
               <Grid container item spacing={1} justifyContent="center">
                 <Grid item>
-                  <Box width={30} height={30} />
+                  <Box sx={{ width: { xs: 5, sm: 25, md: 25 }, height: {xs: 5, sm: 25, md: 25} }} />
                 </Grid>
                 {Array.from({ length: 11 }).map((_, colIndex) => (
                   <Grid
@@ -439,13 +445,16 @@ export default function MovieScreen() {
                     }}
                   >
                     <Box
-                      width={30}
-                      height={30}
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      fontSize={15}
-                      fontWeight="bold"
+                      sx={{
+                        width: { xs: 12, sm: 25, md: 30 },
+                        height: { xs: 20, sm: 25, md: 30 },
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: { xs: 8, sm: 12, md: 15 },
+                        fontWeight: "bold",
+                        // padding:{xs: 0.5, sm: 12, md: 15}
+                      }}
                     >
                       {colIndex + 1}
                     </Box>
@@ -453,6 +462,8 @@ export default function MovieScreen() {
                 ))}
               </Grid>
             </Grid>
+
+
 
             <Stack
               direction={"row"}
@@ -462,7 +473,7 @@ export default function MovieScreen() {
               sx={{
                 textAlign: "center",
                 justifyContent: "center",
-              
+                flexWrap: "wrap",
               }}
             >
               <Typography
@@ -722,7 +733,7 @@ export default function MovieScreen() {
                     justifyContent="center"
                     mt={4}
                   >
-                    {confirm.length > 0 ? (
+                    {confirm.length === 0 ? (
                       <Payments
                         movie={movie.title}
                         theater={selectedTheater.name}
@@ -752,23 +763,25 @@ export default function MovieScreen() {
                       />
                     ) : (
                       <Button
-                     
                         onClick={() =>
                           toast.error("Please select seets then proceed ")
                         }
                         variant="contained"
                         sx={{
-                          fontWeight: "bold" ,
-                          backgroundColor: mode === "dark"? "#2b3b94" : "#2b3b94",
-                          color:"#fff",
-                          borderColor: mode === "dark"? "#212121" : "#ffffff",
+                          fontWeight: "bold",
+                          backgroundColor:
+                            mode === "dark" ? "#2b3b94" : "#2b3b94",
+                          color: "#fff",
+                          borderColor: mode === "dark" ? "#212121" : "#ffffff",
                           transition: "all 0.5s ease ",
                           "&:hover": {
-                            backgroundColor: mode === "dark"? "#2b3b94" : "#2b3b94",
-                            color:"#fff",
-                            borderColor: mode === "dark"? "#212121" : "#ffffff",
+                            backgroundColor:
+                              mode === "dark" ? "#2b3b94" : "#2b3b94",
+                            color: "#fff",
+                            borderColor:
+                              mode === "dark" ? "#212121" : "#ffffff",
                             transform: "scale(1.04)",
-                          }
+                          },
                         }}
                       >
                         Proceed to payment
@@ -779,6 +792,7 @@ export default function MovieScreen() {
               </Box>
             </Box>
           </Grid>
+          
         </Grid>
       )}
     </Box>

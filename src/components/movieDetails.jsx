@@ -98,8 +98,8 @@ export default function MovieDetails() {
             flexDirection: { xs: "column", md: "row" },
             backgroundColor: mode === "dark" ? "#141414" : "#faf8f8",
             color: mode === "dark" ? "#fff" : "#000",
-            ml: { xs: "50px", md: "100px" },
-            mr: { xs: "50px", md: "100px" },
+            ml: { xs: "5%", md: "100px" },
+            mr: { xs: "5%", md: "100px" },
             boxShadow: "rgba(0, 0, 0, 0.2) 0px 5px 15px",
             borderRadius: "20px",
             overflow: "hidden",
@@ -125,8 +125,8 @@ export default function MovieDetails() {
           <CardContent
             sx={{
               flex: "1 0 auto",
-              p: 3,
-              width: "400px",
+              p: { xs: 2, md: 3 },
+              width: { xs: "100%", md: "400px" },
               ml: { xs: "0px", md: "40px" },
             }}
           >
@@ -134,7 +134,11 @@ export default function MovieDetails() {
               gutterBottom
               variant="h4"
               component="div"
-              sx={{ mb: 2, fontWeight: "bold" }}
+              sx={{
+                mb: 2,
+                fontWeight: "bold",
+                fontSize: { xs: "24px", md: "34px" },
+              }}
             >
               {item.title}
             </Typography>
@@ -165,6 +169,7 @@ export default function MovieDetails() {
               direction={"row"}
               sx={{
                 mt: 3,
+                justifyContent: { xs: "center", md: "flex-start" },
               }}
             >
               <Link to={`/user/movies/booking/payments/${item._id}`}>
@@ -180,6 +185,8 @@ export default function MovieDetails() {
                       color: "#fff",
                       backgroundColor: "#004d00",
                     },
+                    width: { xs: "100%", md: "auto" },
+                    textAlign: "center",
                   }}
                 >
                   <BookOnlineIcon sx={{ mr: 1, fontSize: "small" }} /> Buy
@@ -234,10 +241,19 @@ export default function MovieDetails() {
           <Box
             component="div"
             dangerouslySetInnerHTML={{ __html: item.iframeUrl }}
-            sx={{ mt: 3, textAlign: "center", ml: { xs: "1px", md: "30%" } }}
+            sx={{
+              mt: 3,
+              textAlign: "center",
+              ml: { xs: "1%", md: "30%" }, 
+              height: { xs: "30%", md: "100%" },
+              width: { xs: "100%", md: "80%" }, 
+              maxWidth: "100%", 
+              overflow: "hidden", 
+            }}
           />
         )}
       </Box>
+
       <Stack>
         <Typography
           variant="h2"
@@ -256,25 +272,26 @@ export default function MovieDetails() {
         </Typography>
         {item && <RateAndreview movie={item} />}
       </Stack>
-      <Box ml={{ xs: 2, md: 8 }} mr={{ xs: 2, md: 8 }} mb={10}>
+
+      <Box sx={{ ml: { xs: 2, md: 8 }, mr: { xs: 2, md: 8 }, mb: 10 }}>
         <Typography
           variant="h2"
-          style={headTwoStyle}
+          sx={headTwoStyle}
           color={mode === "dark" ? "textSecondary" : "textPrimary"}
         >
           Trending Movies
         </Typography>
         <Grid container spacing={3}>
           {slicedTrendingMovies.map((item, index) => (
-            <Grid item xs={12} sm={6} md={6} lg={3} key={index}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
               <Link
                 style={{ textDecoration: "none" }}
                 to={`/user/movies/${item._id}`}
               >
                 <Card
                   sx={{
-                    width: "260px",
-                    height: "380px",
+                    width: { xs: "100%", sm: "260px" },
+                    height: { xs: "auto", sm: "380px" },
                     backgroundColor: mode === "dark" ? "#070707" : "#f5f3f3",
                     color: mode === "dark" ? "#fff" : "#000",
                     border:
@@ -302,10 +319,10 @@ export default function MovieDetails() {
                       component="img"
                       sx={{
                         height: "280px",
-                        width: "280px",
+                        width: "100%",
                         objectFit: "cover",
                         transition: "all 0.3s",
-                        borderRadius:'10px'
+                        borderRadius: "10px",
                       }}
                       image={item.image}
                       alt={item.title}
@@ -316,10 +333,15 @@ export default function MovieDetails() {
                         gutterBottom
                         variant="h6"
                         component="div"
+                        textAlign="center"
                       >
                         {item.title}
                       </Typography>
-                      <Stack direction={"row"} spacing={5}>
+                      <Stack
+                        direction={"row"}
+                        spacing={5}
+                        justifyContent="center"
+                      >
                         <Typography
                           sx={textStyle}
                           gutterBottom
