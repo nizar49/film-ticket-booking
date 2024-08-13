@@ -187,7 +187,7 @@ export default function MovieScreen() {
   });
 
   return (
-    <Box p={2} mr={5}>
+    <Box p={2} mr={5} mt={3}>
       {!selectedTheater ? (
         <Box maxWidth={500} ml={3}>
           <Typography
