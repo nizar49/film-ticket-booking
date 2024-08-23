@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { TextField, Button, Typography, Container, Box, CircularProgress } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Typography,
+  Container,
+  Box,
+  CircularProgress,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
@@ -24,7 +34,10 @@ const schema = yup.object().shape({
   firstName: yup
     .string()
     .min(3, "First name must be at least 3 characters long")
-    .matches(/^[a-zA-Z0-9]+$/, "First name can only contain letters and numbers")
+    .matches(
+      /^[a-zA-Z0-9]+$/,
+      "First name can only contain letters and numbers"
+    )
     .required("First name is required"),
   lastName: yup
     .string()
@@ -41,7 +54,6 @@ const schema = yup.object().shape({
     .max(24, "Password cannot be longer than 24 characters")
     .required("Password is required"),
 });
-
 
 export default function Signup() {
   const { signup } = AuthStore();
@@ -70,15 +82,20 @@ export default function Signup() {
           toast.success("Successfully signed up");
           navigate("/user/dashboard");
           reset();
-          
         }, 2000);
       }
     } catch (error) {
       console.log(error);
       setLoading(false);
       toast.error(error.response?.data?.message || "Something went wrong");
-      
     }
+  };
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
 
   return (
@@ -162,7 +179,6 @@ export default function Signup() {
             {...register("firstName")}
             error={!!errors.firstName}
             helperText={errors.firstName ? errors.firstName.message : ""}
-           
           />
           <TextField
             variant="outlined"
@@ -207,7 +223,7 @@ export default function Signup() {
             fullWidth
             name="password"
             label="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
             autoComplete="current-password"
             {...register("password")}
@@ -217,6 +233,20 @@ export default function Signup() {
               fontWeight: "bold",
               fontSize: "1rem",
               "@media (max-width: 600px)": { fontSize: "0.9rem" },
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
             }}
           />
           <p style={{ textAlign: "center" }}>
