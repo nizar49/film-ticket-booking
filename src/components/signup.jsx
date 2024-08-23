@@ -21,11 +21,27 @@ const styles = {
 };
 
 const schema = yup.object().shape({
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
-  email: yup.string().email().required(),
-  password: yup.string().min(8).max(24).required(),
+  firstName: yup
+    .string()
+    .min(3, "First name must be at least 3 characters long")
+    .matches(/^[a-zA-Z0-9]+$/, "First name can only contain letters and numbers")
+    .required("First name is required"),
+  lastName: yup
+    .string()
+    .min(3, "Last name must be at least 3 characters long")
+    .matches(/^[a-zA-Z0-9]+$/, "Last name can only contain letters and numbers")
+    .required("Last name is required"),
+  email: yup
+    .string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .max(24, "Password cannot be longer than 24 characters")
+    .required("Password is required"),
 });
+
 
 export default function Signup() {
   const { signup } = AuthStore();
