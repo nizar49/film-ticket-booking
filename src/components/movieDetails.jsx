@@ -243,12 +243,14 @@ export default function MovieDetails() {
             dangerouslySetInnerHTML={{ __html: item.iframeUrl }}
             sx={{
               mt: 3,
-              textAlign: "center",
-              ml: { xs: "1%", md: "auto" }, 
-              height: { xs: "30%", md: "auto" },
-              width: { xs: "98%", md: "80%" }, 
-              maxWidth: "100%", 
-              overflow: "hidden", 
+              display: "flex",
+              justifyContent: "center", 
+              ml: { xs: "1%", md: "auto" },
+              mr: { xs: "1%", md: "auto" },
+              width: { xs: "100%", md: "80%" },
+              maxWidth: "100%",
+              height: { xs: "auto", md: "auto" },
+              overflow: "hidden",
             }}
           />
         )}
