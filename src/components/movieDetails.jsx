@@ -244,9 +244,9 @@ export default function MovieDetails() {
             sx={{
               mt: 3,
               textAlign: "center",
-              ml: { xs: "1%", md: "30%" }, 
-              height: { xs: "30%", md: "100%" },
-              width: { xs: "100%", md: "80%" }, 
+              ml: { xs: "1%", md: "auto" }, 
+              height: { xs: "30%", md: "auto" },
+              width: { xs: "98%", md: "80%" }, 
               maxWidth: "100%", 
               overflow: "hidden", 
             }}

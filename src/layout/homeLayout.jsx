@@ -8,10 +8,7 @@ export default function HomeLayout() {
     <>
       <div id="detail">
         <nav>
-
-          <HomeNavbar />
-   
-          
+          <HomeNavbar /> 
         </nav>
         <Outlet />
         <Footer/>
