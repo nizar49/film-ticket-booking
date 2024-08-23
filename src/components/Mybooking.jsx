@@ -43,15 +43,15 @@ export default function MyBooking() {
          color={mode === "dark" ? "textSecondary" : "textPrimary"}
          textAlign="center"
        >
-         You haven't made any bookings yet.
+         You haven't made any bookings yet...!
        </Typography>
        <img
          src={mode === "dark" ? notFoundDark : notFoundLight}
          alt="not found"
          style={{
-           width: "100%", // Ensures the image takes up the full width of its container
-           maxWidth: "400px", // Sets a max width for larger screens
-           height: "auto", // Maintains aspect ratio and makes it responsive
+           width: "100%", 
+           maxWidth: "400px", 
+           height: "auto",
            borderRadius: "20px",
          }}
        />
