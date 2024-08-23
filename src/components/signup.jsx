@@ -48,10 +48,14 @@ const schema = yup.object().shape({
     .string()
     .email("Invalid email format")
     .required("Email is required"),
-  password: yup
+    password: yup
     .string()
     .min(8, "Password must be at least 8 characters long")
     .max(24, "Password cannot be longer than 24 characters")
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      "Password must contain at least one letter, one number, and one special character"
+    )
     .required("Password is required"),
 });
 
