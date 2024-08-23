@@ -49,8 +49,8 @@ export default function MyBooking() {
             src={mode === "dark" ? notFoundDark : notFoundLight}
             alt="not found"
             style={{
-              maxWidth: "80%",
-              height: "auto",
+              maxWidth: "70%",
+              height:{xs:'auto',md:'400px'},
               borderRadius: "20px",
             }}
           />

@@ -50,15 +50,18 @@ export default function Signup() {
       if (result.status === 200) {
         await signup();
         setTimeout(() => {
+          setLoading(false);
           toast.success("Successfully signed up");
           navigate("/user/dashboard");
           reset();
-          setLoading(false);
+          
         }, 2000);
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
       toast.error(error.response?.data?.message || "Something went wrong");
+      
     }
   };
 

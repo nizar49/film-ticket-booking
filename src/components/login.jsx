@@ -51,15 +51,16 @@ export default function login() {
       }
       await login();
       setTimeout(() => {
+        setLoading(false);
         navigate("/user/dashboard");
         toast.success("Successfully signed up");
-        reset();
-        setLoading(false);
-      }, 2000); // 2 seconds delay
+        reset(); 
+      }, 2000); 
     } catch (error) {
       console.log(error);
-      toast.error(error.response?.data?.message || "Something went wrong");
       setLoading(false);
+      toast.error(error.response?.data?.message || "Something went wrong");
+      
     }
   };
 
