@@ -37,24 +37,26 @@ export default function MyBooking() {
   return (
     <Box mt={6} ml={{ xs: 2, md: 10 }} mb={10}>
       {bookings.length <= 0 ? (
-        <Stack spacing={4} alignItems="center">
-          <Typography
-            variant="h4"
-            color={mode === "dark" ? "textSecondary" : "textPrimary"}
-            textAlign="center"
-          >
-            You haven't made any bookings yet.
-          </Typography>
-          <img
-            src={mode === "dark" ? notFoundDark : notFoundLight}
-            alt="not found"
-            style={{
-              maxWidth:{xs:'80%',md:"30%"} ,
-              height:{xs:'auto',md:'250px'},
-              borderRadius: "20px",
-            }}
-          />
-        </Stack>
+       <Stack spacing={4} alignItems="center">
+       <Typography
+         variant="h4"
+         color={mode === "dark" ? "textSecondary" : "textPrimary"}
+         textAlign="center"
+       >
+         You haven't made any bookings yet.
+       </Typography>
+       <img
+         src={mode === "dark" ? notFoundDark : notFoundLight}
+         alt="not found"
+         style={{
+           width: "100%", // Ensures the image takes up the full width of its container
+           maxWidth: "400px", // Sets a max width for larger screens
+           height: "auto", // Maintains aspect ratio and makes it responsive
+           borderRadius: "20px",
+         }}
+       />
+     </Stack>
+     
       ) : (
         <Stack
           spacing={4}
