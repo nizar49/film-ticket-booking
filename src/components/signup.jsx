@@ -66,7 +66,7 @@ export default function Signup() {
   } = useForm({ resolver: yupResolver(schema) });
   const navigate = useNavigate();
   const { mode } = useTheme();
-
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const onSave = async (data) => {
