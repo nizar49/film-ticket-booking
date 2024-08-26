@@ -123,10 +123,10 @@ export default function UserNavbar() {
                 to={link.path}
                 style={{
                   textDecoration: "none",
-                  color:activeLink===link.value ? "#0ce9d6":textColor,
+                  color: activeLink === link.value ? "#0ce9d6" : textColor,
                   margin: "0 15px",
                 }}
-                onClick={()=>handleLinkClick(link.value)}
+                onClick={() => handleLinkClick(link.value)}
               >
                 <span
                   style={{
@@ -181,9 +181,10 @@ export default function UserNavbar() {
                     to={link.path}
                     style={{
                       textDecoration: "none",
-                      color: textColor,
+                      color: activeLink === link.value ? "#0ce9d6" : textColor,
                       width: "100%",
                     }}
+                    onClick={() => handleLinkClick(link.value)}
                   >
                     {link.value}
                   </Link>
