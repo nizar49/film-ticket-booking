@@ -19,7 +19,7 @@ export default function UserNavbar() {
   const { logout } = useAuthStore();
   const { mode } = useTheme();
   const textColor = mode === "dark" ? "#fff" : "#000000";
-  const linkColor =  mode === "dark" ? "#0ce9d6" : "#006d64";
+  const linkColor =  mode === "dark" ? "#0ce9d6" : "#00978b";
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
