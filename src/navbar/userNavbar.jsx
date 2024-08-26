@@ -19,8 +19,14 @@ export default function UserNavbar() {
   const { logout } = useAuthStore();
   const { mode } = useTheme();
   const textColor = mode === "dark" ? "#fff" : "#000000";
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  const [activeLink, setActiveLink] = useState("");
+  const handleLinkClick = (link) => {
+    setActiveLink(link);
+  };
 
   const navLinks = [
     {
@@ -117,9 +123,10 @@ export default function UserNavbar() {
                 to={link.path}
                 style={{
                   textDecoration: "none",
-                  color: textColor,
+                  color:activeLink===link.value ? "#0ce9d6":textColor,
                   margin: "0 15px",
                 }}
+                onClick={()=>handleLinkClick(link.value)}
               >
                 <span
                   style={{
