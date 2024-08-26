@@ -19,6 +19,7 @@ export default function UserNavbar() {
   const { logout } = useAuthStore();
   const { mode } = useTheme();
   const textColor = mode === "dark" ? "#fff" : "#000000";
+  const linkColor =  mode === "dark" ? "#0ce9d6" : "#006d64";
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -123,7 +124,7 @@ export default function UserNavbar() {
                 to={link.path}
                 style={{
                   textDecoration: "none",
-                  color: activeLink === link.value ? "#0ce9d6" : textColor,
+                  color: activeLink === link.value ? linkColor : textColor,
                   margin: "0 15px",
                 }}
                 onClick={() => handleLinkClick(link.value)}
@@ -181,7 +182,7 @@ export default function UserNavbar() {
                     to={link.path}
                     style={{
                       textDecoration: "none",
-                      color: activeLink === link.value ? "#0ce9d6" : textColor,
+                      color: activeLink === link.value ? linkColor : textColor,
                       width: "100%",
                     }}
                     onClick={() => handleLinkClick(link.value)}
