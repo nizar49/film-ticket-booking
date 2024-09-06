@@ -6,7 +6,8 @@ export default function userNotifications() {
     <div style={{
         display:'flex',
         justifyContent:'center',
-        alignContent:'center'
+        alignContent:'center',
+        marginBottom:'500px'
     }}>userNotifications</div>
 
     </>
