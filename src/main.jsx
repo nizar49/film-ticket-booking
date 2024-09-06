@@ -15,6 +15,7 @@ import PaymentAndBooking from "./pages/paymentAndBooking.jsx";
 import MyBookings from "./pages/bookings.jsx";
 import MovieDetails from "./pages/movieDetais.jsx";
 import ProtectedRoute from "./utils/protectedRotes.jsx";
+import Notifications from "./pages/notifications.jsx"
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
         path: "/user/bookings",
         element: <MyBookings />,
       },
+      {
+        path:'/user/notifications',
+        element:<Notifications/>
+      }
     ],
   },
 ]);
