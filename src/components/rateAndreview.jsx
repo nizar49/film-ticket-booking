@@ -69,32 +69,42 @@ export default function RateAndReview({ movie }) {
       toast.error("Rating is required.");
       return;
     }
-
     const formData = {
       comment: reviewText,
       rating: rating,
       movieId: movie._id,
     };
-
+  
     try {
-      const response = await axios.post(
-        `${baseUrl}/reviews/addReview`,
-        formData,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.post(`${baseUrl}/reviews/addReview`, formData, {
+        withCredentials: true,
+      });
       if (response.status === 200) {
         toast.success("Review submitted successfully!");
         setReviewText("");
         setRating(0);
         fetchReviews();
-      } else {
-        toast.error(response.data.message);
       }
     } catch (error) {
-      console.error(error);
-      toast.error("Failed to submit review. Please try again later.");
+      if (error.response) {
+        const { status, data } = error.response;
+        if (status === 409) {
+          toast.error(data.message || "Review already exists.");
+        } else if (status === 403) {
+          toast.error(data.message || "You have not booked this movie.");
+        } else if (status === 400) {
+          toast.error(data.message || "Incomplete data.");
+        } else if (status === 401) {
+          toast.error(data.message || "User not authorized.");
+        } else if (status === 404) {
+          toast.error(data.message || "Movie or User not found.");
+        } else {
+          toast.error(data.message || "An error occurred.");
+        }
+      } else {
+        toast.error("Something went wrong. Please try again later.");
+      }
+      console.error("Error:", error);
     }
   };
 

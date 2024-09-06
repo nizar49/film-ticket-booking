@@ -240,6 +240,7 @@ export default function RazorPay({
               </Button>
               <Button
                 onClick={handlePayLater}
+                disabled={true}
                 variant="outlined"
                 sx={{
                   color: "#fa7305",

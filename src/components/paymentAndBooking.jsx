@@ -103,7 +103,7 @@ export default function MovieScreen() {
 
   const handleConfirmSeats = useCallback(() => {
     confirmSeats(currentKey);
-    clearTempSeats(currentKey); // Clear temporary seats after confirming
+    clearTempSeats(currentKey); 
   }, [confirmSeats, clearTempSeats, currentKey]);
 
   const handlepay = useCallback(() => {
@@ -150,7 +150,7 @@ export default function MovieScreen() {
     (theater) => {
       setSelectedTheater(theater);
       setSelectedDate(null);
-      resetSeats(generateKey(theater?.name, null)); // Reset seats when selecting a new theater
+      resetSeats(generateKey(theater?.name, null)); 
     },
     [resetSeats]
   );
@@ -158,7 +158,7 @@ export default function MovieScreen() {
   const handleDateSelect = useCallback(
     (date) => {
       setSelectedDate(date);
-      resetSeats(generateKey(selectedTheater?.name, date)); // Reset seats when selecting a new date
+      resetSeats(generateKey(selectedTheater?.name, date)); 
     },
     [resetSeats, selectedTheater]
   );
