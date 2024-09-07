@@ -28,30 +28,29 @@ export default function MyBooking() {
   const [loading, setLoading] = useState([]);
   const [canceled, setCanceld] = useState([]);
 
-    const fetchBookings = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/getBooking/userBookings`, {
-          withCredentials: true,
-        });
-        if (response.status === 200) {
-          setBookings(response.data);
-        } else {
-          console.error("Failed to fetch bookings");
-        }
-      } catch (error) {
-        console.error("Error fetching bookings:", error);
+  const fetchBookings = async () => {
+    try {
+      const response = await axios.get(`${baseUrl}/getBooking/userBookings`, {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        setBookings(response.data);
+      } else {
+        console.error("Failed to fetch bookings");
       }
-    };
-    
+    } catch (error) {
+      console.error("Error fetching bookings:", error);
+    }
+  };
 
   const handleCancel = async (data) => {
     setLoading((prev) => [...prev, data._id]);
     try {
       const response = await axios.post(`${baseUrl}/cancel/bookings`, data);
       if (response.status === 200) {
-        setTimeout(async() => {
+        setTimeout(async () => {
           toast.info(response.data.message);
-          await getUserCancellations()
+          await getUserCancellations();
           setLoading((prev) => prev.filter((id) => id !== data._id));
         }, 2500);
       }
@@ -63,23 +62,23 @@ export default function MyBooking() {
       }, 2500);
     }
   };
-  
-    const getUserCancellations = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/cancel/userBookings`, {
-          withCredentials: true,
-        });
-        if (response.status === 200) {
-          console.log("cancele orders", response.data);
-          setCanceld(response.data);
-        }
-      } catch (error) {
-        console.log(error);
+
+  const getUserCancellations = async () => {
+    try {
+      const response = await axios.get(`${baseUrl}/cancel/userBookings`, {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        console.log("cancele orders", response.data);
+        setCanceld(response.data);
       }
-    };
-    useEffect(() => {
-      fetchBookings()
-      getUserCancellations();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchBookings();
+    getUserCancellations();
   }, []);
 
   return (
@@ -97,7 +96,7 @@ export default function MyBooking() {
             src={mode === "dark" ? notFoundDark : notFoundLight}
             alt="not found"
             style={{
-              maxWidth: "80%",
+              maxWidth: "35%",
               height: "auto",
               borderRadius: "20px",
             }}
@@ -143,11 +142,11 @@ export default function MyBooking() {
                 padding: { xs: 1, sm: 2 },
                 marginBottom: { xs: 1, sm: 2 },
                 backgroundColor: mode === "dark" ? "#080808" : "#fff",
-                opacity:canceled.some((data) => data.orderId === item._id) ?'0.7':'1'
+                opacity: canceled.some((data) => data.orderId === item._id)
+                  ? "0.7"
+                  : "1",
               }}
             >
-              
-             
               <Grid container spacing={2}>
                 <Grid
                   item
@@ -169,7 +168,7 @@ export default function MyBooking() {
                     />
                   )}
                 </Grid>
-                
+
                 <Grid
                   item
                   xs={12}
@@ -231,14 +230,44 @@ export default function MyBooking() {
                   <Typography variant="body1" sx={styles(mode)}>
                     Payment Status: {item.paymentStatus}
                   </Typography>
-                  
 
                   {canceled.some((data) => data.orderId === item._id) ? (
-                    <>
-                    <Stack mt={1} mb={1}>
-                      <Typography sx={{color:'#ca1515',fontSize:'14px',fontWeight:'bold',opacity:'1.5'}}>Cancel requested</Typography>
+                    canceled.some(
+                      (data) =>
+                        data.orderId === item._id &&
+                        data.status === "Cancel Requested"
+                    ) ? (
+                      <Stack key={`cancel-requested-${item._id}`} mt={1} mb={1}>
+                        <Typography
+                          sx={{
+                            color: "#f8f8f8",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            opacity: 1.5,
+                          }}
+                        >
+                          Cancel Requested
+                        </Typography>
                       </Stack>
-                    </>
+                    ) : (
+                      <Stack
+                        key={`confirmed-cancellation-${item._id}`}
+                        mt={1}
+                        mb={1}
+                      >
+                        <Typography
+                          sx={{
+                            color: "#f3f3f3",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            opacity: 1.5,
+                          }}
+                        >
+                          Confirmed cancellation
+                        </Typography>
+                        <Button>Delete</Button>
+                      </Stack>
+                    )
                   ) : (
                     <>
                       <Button
@@ -266,14 +295,14 @@ export default function MyBooking() {
                             sx={{ color: "#d4d4d4" }}
                           />
                         ) : (
-                          " Cancel Order"
+                          "Cancel Booking"
                         )}
                       </Button>
                     </>
                   )}
                 </Grid>
               </Grid>
-              
+
               <Divider />
             </Paper>
           ))}
