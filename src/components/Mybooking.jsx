@@ -143,7 +143,7 @@ export default function MyBooking() {
                 marginBottom: { xs: 1, sm: 2 },
                 backgroundColor: mode === "dark" ? "#080808" : "#fff",
                 opacity: canceled.some((data) => data.orderId === item._id)
-                  ? "0.7"
+                  ? "0.5"
                   : "1",
               }}
             >
