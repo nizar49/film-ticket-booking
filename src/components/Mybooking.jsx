@@ -281,7 +281,7 @@ export default function MyBooking() {
                           backgroundColor:
                             mode === "dark" ? "#610c99" : "#1c75ce",
                           color: mode === "dark" ? "#f0f0f0" : "#000000",
-                          maxWidth: "100px",
+                          maxWidth: "120px",
                           "&:hover": {
                             backgroundColor:
                               mode === "dark" ? "#500c7e" : "#125eaa",
