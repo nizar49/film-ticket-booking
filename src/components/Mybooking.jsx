@@ -1,4 +1,13 @@
-import { Box, Divider, Paper, Grid, Typography, Stack } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Paper,
+  Grid,
+  Typography,
+  Stack,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { baseUrl } from "../basicurl/baseurl";
 import axios from "axios";
@@ -6,6 +15,7 @@ import { format } from "date-fns";
 import { useTheme } from "../theme/themeContext.jsx";
 import notFoundDark from "../images/notFoundDark.jpg";
 import notFoundLight from "../images/59563746_9318707.jpg";
+import { toast } from "react-toastify";
 
 const styles = (mode) => ({
   fontSize: { xs: "0.7rem", md: "0.8rem" },
@@ -15,8 +25,9 @@ const styles = (mode) => ({
 export default function MyBooking() {
   const [bookings, setBookings] = useState([]);
   const { mode } = useTheme();
+  const [loading, setLoading] = useState([]);
+  const [canceled, setCanceld] = useState([]);
 
-  useEffect(() => {
     const fetchBookings = async () => {
       try {
         const response = await axios.get(`${baseUrl}/getBooking/userBookings`, {
@@ -31,32 +42,67 @@ export default function MyBooking() {
         console.error("Error fetching bookings:", error);
       }
     };
-    fetchBookings();
+    
+
+  const handleCancel = async (data) => {
+    setLoading((prev) => [...prev, data._id]);
+    try {
+      const response = await axios.post(`${baseUrl}/cancel/bookings`, data);
+      if (response.status === 200) {
+        setTimeout(async() => {
+          toast.info(response.data.message);
+          await getUserCancellations()
+          setLoading((prev) => prev.filter((id) => id !== data._id));
+        }, 2500);
+      }
+    } catch (error) {
+      setTimeout(() => {
+        console.log(error);
+        toast.error(error.data.message || "something went wrong");
+        setLoading((prev) => prev.filter((id) => id !== data._id));
+      }, 2500);
+    }
+  };
+  
+    const getUserCancellations = async () => {
+      try {
+        const response = await axios.get(`${baseUrl}/cancel/userBookings`, {
+          withCredentials: true,
+        });
+        if (response.status === 200) {
+          console.log("cancele orders", response.data);
+          setCanceld(response.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    useEffect(() => {
+      fetchBookings()
+      getUserCancellations();
   }, []);
 
   return (
     <Box mt={6} ml={{ xs: 2, md: 10 }} mb={10}>
       {bookings.length <= 0 ? (
-       <Stack spacing={4} alignItems="center">
-       <Typography
-         variant="h4"
-         color={mode === "dark" ? "textSecondary" : "textPrimary"}
-         textAlign="center"
-       >
-         You haven't made any bookings yet...!
-       </Typography>
-       <img
-         src={mode === "dark" ? notFoundDark : notFoundLight}
-         alt="not found"
-         style={{
-           width: "100%", 
-           maxWidth: "400px", 
-           height: "auto",
-           borderRadius: "20px",
-         }}
-       />
-     </Stack>
-     
+        <Stack spacing={4} alignItems="center">
+          <Typography
+            variant="h4"
+            color={mode === "dark" ? "textSecondary" : "textPrimary"}
+            textAlign="center"
+          >
+            You haven't made any bookings yet.
+          </Typography>
+          <img
+            src={mode === "dark" ? notFoundDark : notFoundLight}
+            alt="not found"
+            style={{
+              maxWidth: "80%",
+              height: "auto",
+              borderRadius: "20px",
+            }}
+          />
+        </Stack>
       ) : (
         <Stack
           spacing={4}
@@ -97,9 +143,11 @@ export default function MyBooking() {
                 padding: { xs: 1, sm: 2 },
                 marginBottom: { xs: 1, sm: 2 },
                 backgroundColor: mode === "dark" ? "#080808" : "#fff",
-             
+                opacity:canceled.some((data) => data.orderId === item._id) ?'0.7':'1'
               }}
             >
+              
+             
               <Grid container spacing={2}>
                 <Grid
                   item
@@ -121,6 +169,7 @@ export default function MyBooking() {
                     />
                   )}
                 </Grid>
+                
                 <Grid
                   item
                   xs={12}
@@ -129,6 +178,7 @@ export default function MyBooking() {
                   display="flex"
                   flexDirection="column"
                   justifyContent="center"
+                  alignContent="center"
                 >
                   <Typography
                     fontWeight="bold"
@@ -167,13 +217,7 @@ export default function MyBooking() {
                     Time: {item.time}
                   </Typography>
                 </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  md={5}
-                  display="flex"
-                  flexDirection="column"
-                >
+                <Grid item xs={12} md={5} display="flex" flexDirection="column">
                   <Typography variant="body1" sx={styles(mode)}>
                     Seat Numbers:{" "}
                     {item.seetNumbers ? item.seetNumbers.join(", ") : "N/A"}
@@ -187,8 +231,49 @@ export default function MyBooking() {
                   <Typography variant="body1" sx={styles(mode)}>
                     Payment Status: {item.paymentStatus}
                   </Typography>
+                  
+
+                  {canceled.some((data) => data.orderId === item._id) ? (
+                    <>
+                    <Stack mt={1} mb={1}>
+                      <Typography sx={{color:'#ca1515',fontSize:'14px',fontWeight:'bold',opacity:'1.5'}}>Cancel requested</Typography>
+                      </Stack>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        onClick={() => handleCancel(item)}
+                        variant="contained"
+                        size="small"
+                        sx={{
+                          mt: 1,
+                          textTransform: "none",
+                          mb: 1,
+                          backgroundColor:
+                            mode === "dark" ? "#610c99" : "#1c75ce",
+                          color: mode === "dark" ? "#f0f0f0" : "#000000",
+                          maxWidth: "100px",
+                          "&:hover": {
+                            backgroundColor:
+                              mode === "dark" ? "#500c7e" : "#125eaa",
+                            color: mode === "dark" ? "#fff" : "#000000",
+                          },
+                        }}
+                      >
+                        {loading.includes(item._id) ? (
+                          <CircularProgress
+                            size={18}
+                            sx={{ color: "#d4d4d4" }}
+                          />
+                        ) : (
+                          " Cancel Order"
+                        )}
+                      </Button>
+                    </>
+                  )}
                 </Grid>
               </Grid>
+              
               <Divider />
             </Paper>
           ))}

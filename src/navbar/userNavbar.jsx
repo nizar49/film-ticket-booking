@@ -38,10 +38,10 @@ export default function UserNavbar() {
       path: "/user/bookings",
       value: "My Bookings",
     },
-    {
-      path:'/user/notifications',
-      value:"Notifications"
-    }
+    // {
+    //   path:'/user/notifications',
+    //   value:"Notifications"
+    // }
   ];
 
   const handleMenuClick = (event) => {
