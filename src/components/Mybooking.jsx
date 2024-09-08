@@ -7,6 +7,7 @@ import {
   Stack,
   Button,
   CircularProgress,
+  IconButton,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { baseUrl } from "../basicurl/baseurl";
@@ -16,6 +17,7 @@ import { useTheme } from "../theme/themeContext.jsx";
 import notFoundDark from "../images/notFoundDark.jpg";
 import notFoundLight from "../images/59563746_9318707.jpg";
 import { toast } from "react-toastify";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 
 const styles = (mode) => ({
   fontSize: { xs: "0.7rem", md: "0.8rem" },
@@ -27,6 +29,7 @@ export default function MyBooking() {
   const { mode } = useTheme();
   const [loading, setLoading] = useState([]);
   const [canceled, setCanceld] = useState([]);
+  const [loadingById, setLoadingById] = useState([]);
 
   const fetchBookings = async () => {
     try {
@@ -80,6 +83,29 @@ export default function MyBooking() {
     fetchBookings();
     getUserCancellations();
   }, []);
+
+  const handleConfirmSureCancel = async (canceledId, bookingId, userId) => {
+    setLoadingById((prev) => [...prev, bookingId]);
+    try {
+      console.log(canceledId, bookingId, userId);
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      const response = await axios.delete(`${baseUrl}/cancel/deleteBookings`, {
+        data: { cancel: canceledId, booking: bookingId, user: userId },
+      });
+
+      if (response.status === 200) {
+        toast.success("Booking Cancellation Confirmed");
+        await fetchBookings();
+        await getUserCancellations();
+      }
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.message;
+      console.log(errorMessage);
+      toast.error(errorMessage);
+    } finally {
+      setLoadingById((prev) => prev.filter((id) => id !== bookingId));
+    }
+  };
 
   return (
     <Box mt={6} ml={{ xs: 2, md: 10 }} mb={10}>
@@ -143,7 +169,7 @@ export default function MyBooking() {
                 marginBottom: { xs: 1, sm: 2 },
                 backgroundColor: mode === "dark" ? "#080808" : "#fff",
                 opacity: canceled.some((data) => data.orderId === item._id)
-                  ? "0.5"
+                  ? "0.7"
                   : "1",
               }}
             >
@@ -232,7 +258,7 @@ export default function MyBooking() {
                   </Typography>
 
                   {canceled.some((data) => data.orderId === item._id) ? (
-                    canceled.some(
+                    canceled.find(
                       (data) =>
                         data.orderId === item._id &&
                         data.status === "Cancel Requested"
@@ -240,7 +266,7 @@ export default function MyBooking() {
                       <Stack key={`cancel-requested-${item._id}`} mt={1} mb={1}>
                         <Typography
                           sx={{
-                            color: "#f8f8f8",
+                            color: mode === "dark" ? "#f8f8f8" : "#000",
                             fontSize: "14px",
                             fontWeight: "bold",
                             opacity: 1.5,
@@ -257,15 +283,70 @@ export default function MyBooking() {
                       >
                         <Typography
                           sx={{
-                            color: "#f3f3f3",
+                            color: mode === "dark" ? "#f8f8f8" : "#000",
                             fontSize: "14px",
                             fontWeight: "bold",
                             opacity: 1.5,
                           }}
                         >
-                          Confirmed cancellation
+                          Click confirm to confirm cancellation.?
                         </Typography>
-                        <Button>Delete</Button>
+
+                        {canceled.find((data) => data.orderId === item._id) && (
+                          <IconButton
+                            onClick={() => {
+                              const canceledItem = canceled.find(
+                                (data) => data.orderId === item._id
+                              );
+                              handleConfirmSureCancel(
+                                canceledItem._id,
+                                item._id,
+                                item.userId
+                              );
+                            }}
+                            sx={{
+                              color: mode === "dark" ? "#fff" : "#000",
+                              borderRadius: "8px",
+                              padding: "7px",
+                              backgroundColor:
+                                mode === "dark" ? "#3d3d3d" : "#cecece",
+                              "&:hover": {
+                                backgroundColor:
+                                  mode === "dark" ? "#2c2c2c" : "#e6e6e6",
+                              },
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            {loadingById.includes(item._id) ? (
+                              <CircularProgress
+                                size={24}
+                                sx={{
+                                  color: mode === "dark" ? "#fff" : "#000",
+                                }}
+                              />
+                            ) : (
+                              <>
+                                <span
+                                  style={{
+                                    fontSize: "14px",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  Confirm
+                                </span>
+                                <CheckCircleOutlineOutlinedIcon
+                                  sx={{
+                                    fontSize: "28px",
+                                    color:
+                                      mode === "dark" ? "#ff4d4d" : "#d32f2f",
+                                  }}
+                                />
+                              </>
+                            )}
+                          </IconButton>
+                        )}
                       </Stack>
                     )
                   ) : (
@@ -295,7 +376,7 @@ export default function MyBooking() {
                             sx={{ color: "#d4d4d4" }}
                           />
                         ) : (
-                          "Cancel Booking"
+                          "Cancel Bookings"
                         )}
                       </Button>
                     </>
