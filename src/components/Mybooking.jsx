@@ -338,9 +338,9 @@ export default function MyBooking() {
                                 </span>
                                 <CheckCircleOutlineOutlinedIcon
                                   sx={{
-                                    fontSize: "28px",
+                                    fontSize: "20px",
                                     color:
-                                      mode === "dark" ? "#ff4d4d" : "#d32f2f",
+                                      mode === "dark" ? "#6259e2" : "#120a80",
                                   }}
                                 />
                               </>
