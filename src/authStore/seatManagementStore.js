@@ -27,6 +27,9 @@ const SeatManageStore = create(
           const tempSeats = state.seatsByProduct[key] || [];
           const confirmedSeats = state.confirmedSeatsByProduct[key] || [];
           const updatedConfirmedSeats = [...confirmedSeats, ...tempSeats];
+              
+          console.log('Confirming Seats for Key:', key);
+          console.log('Temp Seats to Confirm:', tempSeats);
 
           return {
             confirmedSeatsByProduct: {
@@ -39,8 +42,23 @@ const SeatManageStore = create(
             },
           };
         }),
-        
-        
+
+        removeSeats: (key, seatsToRemove) =>
+        set((state) => {
+          const confirmedSeats = state.confirmedSeatsByProduct[key] || [];
+          const updatedConfirmedSeats = confirmedSeats.filter(
+            (seat) => !seatsToRemove.includes(seat)
+          );
+                 console.log('Removing Seats for Key:', key);
+               console.log('Seats to Remove:', seatsToRemove);
+             console.log('Updated Confirmed Seats:', updatedConfirmedSeats);
+          return {
+            confirmedSeatsByProduct: {
+              ...state.confirmedSeatsByProduct,
+              [key]: updatedConfirmedSeats,
+            },
+          };
+        }),
 
       resetSeats: (key) =>
         set((state) => ({

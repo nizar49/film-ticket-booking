@@ -26,6 +26,7 @@ export default function MovieScreen() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [confirm, setConfirm] = useState([]);
   const [loading, setLoading] = useState(true);
+ 
 
   const fetchShows = useCallback(async () => {
     try {
@@ -39,6 +40,9 @@ export default function MovieScreen() {
       console.error(error);
     }
   }, [id]);
+  
+  
+ 
 
   useEffect(() => {
     fetchShows().finally(() => setLoading(false));
@@ -52,6 +56,7 @@ export default function MovieScreen() {
     resetSeats,
     clearTempSeats,
     resetConfirmedSeats,
+    removeSeats
   } = SeatManageStore((state) => ({
     seatsByProduct: state.seatsByProduct,
     confirmedSeatsByProduct: state.confirmedSeatsByProduct,
@@ -60,8 +65,56 @@ export default function MovieScreen() {
     resetSeats: state.resetSeats,
     clearTempSeats: state.clearTempSeats,
     resetConfirmedSeats: state.resetConfirmedSeats,
+    removeSeats: state.removeSeats,
   }));
 
+
+  useEffect(() => {
+    const fetchCanceledSeats = async () => {
+      try {
+        const response = await axios.get(`${baseUrl}/cancel/canceledSeats`);
+        if (response.status === 200) {
+          const canceledSeats = response.data.data;
+          for (const { _id, movieId, theaterName, bookingDate, seatNumbers, bookingTime } of canceledSeats) {
+            try {
+              if (!bookingDate || !bookingTime) {
+                console.error('Invalid bookingDate or bookingTime:', { bookingDate, bookingTime });
+                continue; 
+              }
+              const date = new Date(bookingDate);
+              const [time, modifier] = bookingTime.split(' ');
+              let [hours, minutes] = time.split(':').map(Number);
+              if (modifier === 'PM' && hours < 12) hours += 12;
+              if (modifier === 'AM' && hours === 12) hours = 0;
+  
+              date.setHours(hours, minutes);
+              const formattedDateTime = date.toISOString();
+              const key = generateKey(theaterName, formattedDateTime);
+              SeatManageStore.getState().removeSeats(key, seatNumbers);
+
+              const res = await axios.delete(`${baseUrl}/cancel/clearSeatsSchema`, {
+                data: { id: _id } 
+              });
+  
+              if (res.status === 200) {
+                console.log('Seats cleared from the database successfully');
+              } else {
+                console.log('Failed to clear seats from the database');
+              }
+            } catch (error) {
+              console.error('Error processing canceled seat entry:', error);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching canceled seats:', error);
+      }
+    };
+  
+    fetchCanceledSeats();
+  }, []);
+  
+ 
   const generateKey = (theater, date) => {
     if (!theater) return null;
     return `${id}-${theater}-${date}`;
@@ -304,7 +357,7 @@ export default function MovieScreen() {
           mb={1}
           textAlign={"center"}
         >
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={8} >
             <Box>
               <Button
                 variant="outlined"
