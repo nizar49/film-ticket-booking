@@ -189,8 +189,8 @@ export default function RazorPay({
               zIndex: 9999,
             }}
           >
-            <CircularProgress
-              sx={{ color: mode === "dark" ? "white" : "black" }}
+            <CircularProgress size={20}
+              sx={{ color: mode === "dark" ? "#b6b6b6" : "#0e0e0e" }}
             />
           </Box>
         )}
