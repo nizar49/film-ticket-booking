@@ -321,9 +321,9 @@ export default function MyBooking() {
                           >
                             {loadingById.includes(item._id) ? (
                               <CircularProgress
-                                size={24}
+                                size={20}
                                 sx={{
-                                  color: mode === "dark" ? "#fff" : "#000",
+                                  color: mode === "dark" ? "#d6d6d6" : "#0a0a0a",
                                 }}
                               />
                             ) : (
@@ -340,7 +340,7 @@ export default function MyBooking() {
                                   sx={{
                                     fontSize: "20px",
                                     color:
-                                      mode === "dark" ? "#6259e2" : "#120a80",
+                                    mode === "dark" ? "#5fda26" : "#135506",
                                   }}
                                 />
                               </>
