@@ -12,7 +12,7 @@ export default function useGetMovies() {
         setMovies(response.data.movies);
        
       } catch (error) {
-        console.error(error);
+        console.error(error||"error");
       }
     };
     getMovies();
